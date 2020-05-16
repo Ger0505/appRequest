@@ -5,7 +5,7 @@
 # Project name:                                                          #
 # Author:                                                                #
 # Script type:           Database creation script                        #
-# Created on:            2020-05-16 14:32                                #
+# Created on:            2020-05-16 15:51                                #
 # ---------------------------------------------------------------------- #
 
 
@@ -22,12 +22,12 @@ CREATE TABLE `COLABORADOR` (
     `Nombre` VARCHAR(40) NOT NULL,
     `Apellido1` VARCHAR(40) NOT NULL,
     `Apellido2` VARCHAR(40),
-    `FechaAlta` DATE NOT NULL,
     `Usuario` VARCHAR(40) NOT NULL,
     `Password` VARCHAR(40) NOT NULL,
     `IdPuesto` INTEGER NOT NULL,
     `IdDepartamento` INTEGER NOT NULL,
     `Status` INTEGER NOT NULL DEFAULT 1,
+    `FechaAlta` DATE NOT NULL DEFAULT NOW(),
     CONSTRAINT `PK_COLABORADOR` PRIMARY KEY (`IdColaborador`)
 );
 

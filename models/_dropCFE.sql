@@ -5,7 +5,7 @@
 # Project name:                                                          #
 # Author:                                                                #
 # Script type:           Database drop script                            #
-# Created on:            2020-05-16 14:32                                #
+# Created on:            2020-05-16 15:51                                #
 # ---------------------------------------------------------------------- #
 
 
@@ -70,6 +70,8 @@ ALTER TABLE `COLABORADOR` MODIFY `IdColaborador` INTEGER NOT NULL;
 # Drop constraints #
 
 ALTER TABLE `COLABORADOR` ALTER COLUMN `Status` DROP DEFAULT;
+
+ALTER TABLE `COLABORADOR` ALTER COLUMN `FechaAlta` DROP DEFAULT;
 
 ALTER TABLE `COLABORADOR` DROP PRIMARY KEY;
 
