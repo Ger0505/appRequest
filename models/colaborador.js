@@ -21,8 +21,8 @@ Colaborador.listColaborador = function (result) {
     +"FechaAlta,"
     +"Usuario,"
     +"Password,"
-    +"P.Descripcion,"
-    +"D.Descripcion "
+    +"P.Descripcion AS Puesto,"
+    +"D.Descripcion AS Departamento"
     +"FROM "
     +"colaborador C "
     +"INNER JOIN puesto P ON P.IdPuesto = C.IdPuesto "
@@ -47,9 +47,8 @@ Colaborador.getColaborador = function (id,result) {
     +"Apellido2,"
     +"FechaAlta,"
     +"Usuario,"
-    +"Password,"
-    +"P.Descripcion,"
-    +"D.Descripcion"
+    +"P.Descripcion AS Puesto,"
+    +"D.Descripcion AS Departamento"
     +" FROM "
     +"colaborador C "
     +"INNER JOIN puesto P ON P.IdPuesto = C.IdPuesto "
@@ -67,8 +66,8 @@ Colaborador.getColaborador = function (id,result) {
 };
 
 Colaborador.insertColaborador = function (body,result) {
-    db.query("INSERT INTO colaborador(Nombre,Apellido1,Apellido2,FechaAlta,Usuario,Password,IdPuesto,IdDepartamento)"+
-    "VALUES(?,?,?,?,?,?,?,?)",[body.nombre,body.ape1,body.ape2,body.fecha,body.usu,body.pass,body.puesto,body.dep],
+    db.query("INSERT INTO colaborador(Nombre,Apellido1,Apellido2,Usuario,Password,IdPuesto,IdDepartamento)"+
+    "VALUES(?,?,?,?,?,?,?)",[body.nombre,body.ape1,body.ape2,body.usu,body.pass,body.puesto,body.dep],
     function (err, res) {             
             if(err) {
                 console.log("error: ", err);
@@ -85,13 +84,12 @@ Colaborador.updateColaborador = function (body,result) {
     +"NOMBRE = ?,"
     +"APELLIDO1 = ?,"
     +"APELLIDO2 = ?,"
-    +"FECHAALTA = ?,"
     +"USUARIO = ?,"
     +"PASSWORD = ?,"
     +"IDPUESTO = ?,"
     +"IDDEPARTAMENTO = ?"
     +"WHERE IDCOLABORADOR = ?",
-    [body.nombre,body.ape1,body.ape2,body.fecha,body.usu,body.pass,body.puesto,body.dep,body.id],
+    [body.nombre,body.ape1,body.ape2,body.usu,body.pass,body.puesto,body.dep,body.id],
     function (err, res) {             
             if(err) {
                 console.log("error: ", err);
