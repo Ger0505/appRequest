@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var colModel = require('../models/colaborador.js');
+const colModel = require('../models/colaborador.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
