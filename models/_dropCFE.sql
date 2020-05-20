@@ -5,7 +5,7 @@
 # Project name:                                                          #
 # Author:                                                                #
 # Script type:           Database drop script                            #
-# Created on:            2020-05-16 15:51                                #
+# Created on:            2020-05-19 23:16                                #
 # ---------------------------------------------------------------------- #
 
 
@@ -37,6 +37,10 @@ ALTER TABLE `COMENTARIOS` MODIFY `IdComentario` INTEGER NOT NULL;
 
 # Drop constraints #
 
+ALTER TABLE `COMENTARIOS` ALTER COLUMN `Fecha` DROP DEFAULT;
+
+ALTER TABLE `COMENTARIOS` ALTER COLUMN `Status` DROP DEFAULT;
+
 ALTER TABLE `COMENTARIOS` DROP PRIMARY KEY;
 
 # Drop table #
@@ -52,6 +56,8 @@ DROP TABLE `COMENTARIOS`;
 ALTER TABLE `TAREA` MODIFY `IdTarea` INTEGER NOT NULL;
 
 # Drop constraints #
+
+ALTER TABLE `TAREA` ALTER COLUMN `FechaInicio` DROP DEFAULT;
 
 ALTER TABLE `TAREA` DROP PRIMARY KEY;
 
@@ -69,9 +75,9 @@ ALTER TABLE `COLABORADOR` MODIFY `IdColaborador` INTEGER NOT NULL;
 
 # Drop constraints #
 
-ALTER TABLE `COLABORADOR` ALTER COLUMN `Status` DROP DEFAULT;
-
 ALTER TABLE `COLABORADOR` ALTER COLUMN `FechaAlta` DROP DEFAULT;
+
+ALTER TABLE `COLABORADOR` ALTER COLUMN `Status` DROP DEFAULT;
 
 ALTER TABLE `COLABORADOR` DROP PRIMARY KEY;
 
@@ -89,6 +95,8 @@ ALTER TABLE `STATUS` MODIFY `IdStatus` INTEGER NOT NULL;
 
 # Drop constraints #
 
+ALTER TABLE `STATUS` ALTER COLUMN `Status` DROP DEFAULT;
+
 ALTER TABLE `STATUS` DROP PRIMARY KEY;
 
 # Drop table #
@@ -105,6 +113,8 @@ ALTER TABLE `DEPARTAMENTO` MODIFY `IdDepartamento` INTEGER NOT NULL;
 
 # Drop constraints #
 
+ALTER TABLE `DEPARTAMENTO` ALTER COLUMN `Status` DROP DEFAULT;
+
 ALTER TABLE `DEPARTAMENTO` DROP PRIMARY KEY;
 
 # Drop table #
@@ -120,6 +130,8 @@ DROP TABLE `DEPARTAMENTO`;
 ALTER TABLE `PUESTO` MODIFY `IdPuesto` INTEGER NOT NULL;
 
 # Drop constraints #
+
+ALTER TABLE `PUESTO` ALTER COLUMN `Status` DROP DEFAULT;
 
 ALTER TABLE `PUESTO` DROP PRIMARY KEY;
 

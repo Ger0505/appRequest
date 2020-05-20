@@ -5,7 +5,7 @@
 # Project name:                                                          #
 # Author:                                                                #
 # Script type:           Database creation script                        #
-# Created on:            2020-05-16 15:51                                #
+# Created on:            2020-05-19 23:16                                #
 # ---------------------------------------------------------------------- #
 
 
@@ -26,8 +26,8 @@ CREATE TABLE `COLABORADOR` (
     `Password` VARCHAR(40) NOT NULL,
     `IdPuesto` INTEGER NOT NULL,
     `IdDepartamento` INTEGER NOT NULL,
-    `Status` INTEGER NOT NULL DEFAULT 1,
     `FechaAlta` DATE NOT NULL DEFAULT NOW(),
+    `Status` INTEGER NOT NULL DEFAULT 1,
     CONSTRAINT `PK_COLABORADOR` PRIMARY KEY (`IdColaborador`)
 );
 
@@ -38,6 +38,7 @@ CREATE TABLE `COLABORADOR` (
 CREATE TABLE `PUESTO` (
     `IdPuesto` INTEGER NOT NULL AUTO_INCREMENT,
     `Descripcion` VARCHAR(40) NOT NULL,
+    `Status` INTEGER NOT NULL DEFAULT 1,
     CONSTRAINT `PK_PUESTO` PRIMARY KEY (`IdPuesto`)
 );
 
@@ -48,6 +49,7 @@ CREATE TABLE `PUESTO` (
 CREATE TABLE `DEPARTAMENTO` (
     `IdDepartamento` INTEGER NOT NULL AUTO_INCREMENT,
     `Descripcion` VARCHAR(60) NOT NULL,
+    `Status` VARCHAR(40) NOT NULL DEFAULT '1',
     CONSTRAINT `PK_DEPARTAMENTO` PRIMARY KEY (`IdDepartamento`)
 );
 
@@ -58,11 +60,11 @@ CREATE TABLE `DEPARTAMENTO` (
 CREATE TABLE `TAREA` (
     `IdTarea` INTEGER NOT NULL AUTO_INCREMENT,
     `TItulo` VARCHAR(40) NOT NULL,
-    `Descripcion` VARCHAR(60),
-    `FechaInicio` DATE NOT NULL,
+    `Descripcion` VARCHAR(60) NOT NULL,
+    `FechaInicio` DATE NOT NULL DEFAULT NOW(),
     `FechaFin` DATE NOT NULL,
     `IdResponsable` INTEGER NOT NULL,
-    `IdColaborador` INTEGER,
+    `IdColaborador` INTEGER NOT NULL,
     `IdStatus` INTEGER NOT NULL,
     CONSTRAINT `PK_TAREA` PRIMARY KEY (`IdTarea`)
 );
@@ -74,6 +76,7 @@ CREATE TABLE `TAREA` (
 CREATE TABLE `STATUS` (
     `IdStatus` INTEGER NOT NULL AUTO_INCREMENT,
     `Descripcion` VARCHAR(40) NOT NULL,
+    `Status` INTEGER NOT NULL DEFAULT 1,
     CONSTRAINT `PK_STATUS` PRIMARY KEY (`IdStatus`)
 );
 
@@ -84,9 +87,10 @@ CREATE TABLE `STATUS` (
 CREATE TABLE `COMENTARIOS` (
     `IdComentario` INTEGER NOT NULL AUTO_INCREMENT,
     `Comentario` VARCHAR(100) NOT NULL,
-    `Fecha` DATE NOT NULL,
+    `Fecha` DATE NOT NULL DEFAULT NOW(),
     `IdTarea` INTEGER NOT NULL,
     `IdColaborador` INTEGER NOT NULL,
+    `Status` INTEGER NOT NULL DEFAULT 1,
     CONSTRAINT `PK_COMENTARIOS` PRIMARY KEY (`IdComentario`)
 );
 
