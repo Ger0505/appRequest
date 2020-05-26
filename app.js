@@ -11,6 +11,7 @@ const colaboradorRouter = require("./routes/colaborador");
 const tareaRouter = require("./routes/tarea");
 const comentariosRouter = require("./routes/comentarios");
 const puestoRouter = require("./routes/puesto");
+const statusRouter = require("./routes/status");
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use("/colaborador", colaboradorRouter);
 app.use("/tarea", tareaRouter);
 app.use("/comentarios", comentariosRouter);
 app.use("/puesto", puestoRouter);
+app.use("/status", statusRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
