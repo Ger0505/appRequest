@@ -31,7 +31,7 @@ Status.getStatus = function (id, result) {
     "SELECT " +
     "IdStatus," +
     "Nombre," +
-    "Descripcion," +
+    "Descripcion " +
     "FROM " +
     "Status " +
     "WHERE STATUS = 1 AND IDSTATUS ="+id,
@@ -48,8 +48,8 @@ Status.getStatus = function (id, result) {
 
 Status.insertStatus = function (body, result) {
   db.query(
-    "INSERT INTO STATUS(Nombre,Descripcion) " +
-      "VALUES(?,?)",
+    "INSERT INTO STATUS(Nombre,Descripcion,Status) " +
+      "VALUES(?,?,1)",
     [
       body.nombre,
       body.descripcion
@@ -67,14 +67,13 @@ Status.insertStatus = function (body, result) {
 
 Status.updateStatus = function (body, result) {
   db.query(
-    "UPDATE colaborador SET " +
+    "UPDATE status SET " +
       "NOMBRE = ?," +
       "DESCRIPCION = ? " +
-      "WHERE IDCOLABORADOR = ?",
+      "WHERE IDSTATUS = "+body.id,
     [
       body.nombre,
-      body.descripcion,
-      body.id,
+      body.descripcion
     ],
     function (err, res) {
       if (err) {
@@ -89,7 +88,7 @@ Status.updateStatus = function (body, result) {
 
 Status.deleteStatus = function (id, result) {
   db.query(
-    "DELETE from status SET STATUS= 0 WHERE IDSTATUS = " + id,
+    "UPDATE status SET STATUS= 0 WHERE IDSTATUS = " + id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);

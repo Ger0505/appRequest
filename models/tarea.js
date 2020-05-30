@@ -11,10 +11,17 @@ var Tarea = (Tarea) => {
 };
 
 Tarea.listTarea = (result) => {
-  db.query(
-    "Select Titulo, Descripcion, FechaInicio, FechaFin, c.Nombre, c.Nombre, s.Descripcion " +
-      "from tarea as t INNER JOIN colaborador as c on t.idResponsable = c.idColaborador and t.idColaborador = c.idColaborador " +
-      "INNER JOIN status as s on s.idStatus = t.idStatus",
+  db.query("SELECT "+
+    "Tar.IdTarea,"+
+    "Tar.Titulo,"+
+    "Sta.Nombre AS Status,"+
+    "Tar.Descripcion,"+
+    "CONCAT(Col1.Nombre, ' ' , Col1.Apellido1) AS Colaborador,"+
+	  "CONCAT(Col2.Nombre, ' ' , Col2.Apellido1) AS Responsable "+
+    "FROM tarea Tar "+
+    "INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador "+
+    "INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable "+
+    "INNER JOIN STATUS Sta ON Sta.IdStatus = Tar.IdStatus",
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -27,12 +34,16 @@ Tarea.listTarea = (result) => {
 };
 
 Tarea.getTarea = (id, result) => {
-  db.query(
-    "Select Titulo, Descripcion, FechaInicio, FechaFin, c.Nombre, c.Nombre, s.Descripcion " +
-      "from tarea as t INNER JOIN colaborador as c on t.idResponsable = c.idColaborador and t.idColaborador = c.idColaborador " +
-      "INNER JOIN status as s on s.idStatus = t.idStatus " +
-      "where t.idTarea = " +
-      id,
+  db.query("SELECT "+
+    "Tar.IdTarea,"+
+    "Tar.Titulo,"+
+    "Tar.Descripcion,"+
+    "Tar.FechaInicio,"+
+    "Tar.FechaFin,"+
+    "Tar.IdResponsable,"+
+    "Tar.IdColaborador,"+
+    "Tar.IdStatus "+
+    "FROM tarea Tar WHERE Tar.IdTarea="+ id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -46,17 +57,16 @@ Tarea.getTarea = (id, result) => {
 
 Tarea.insertTarea = (body, result) => {
   db.query(
-    "Insert into tarea " +
-      "(Titulo, Descripcion, FechaInicio, FechaFin, idResponsable, idColaborador, idStatus) " +
-      "values (?,?,?,?,?,?,?)",
+    "INSERT INTO TAREA " +
+      "(Titulo, Descripcion,FechaFin, idResponsable, idColaborador, idStatus) " +
+      "VALUES(?,?,?,?,?,?)",
     [
       body.titulo,
       body.descripcion,
-      body.fechaInicio,
       body.fechaFin,
       body.responsable,
       body.colaborador,
-      body.status,
+      body.status
     ],
     function (err, res) {
       if (err) {
@@ -71,15 +81,14 @@ Tarea.insertTarea = (body, result) => {
 
 Tarea.updateTarea = (body, result) => {
   db.query(
-    "Update tarea set " +
-      "Titulo = ? " +
-      "Descripcion = ? " +
-      "FechaInicio = ? " +
-      "FechaFin = ? " +
-      "idResponsable = ? " +
-      "idColaborador = ? " +
+    "Update TAREA SET " +
+      "Titulo = ?," +
+      "Descripcion = ?," +
+      "FechaFin = ?," +
+      "idResponsable = ?," +
+      "idColaborador = ?," +
       "idStatus = ? " +
-      "where idTarea = ?;",
+      "WHERE idTarea ="+ body.id,
     [
       body.titulo,
       body.descripcion,
@@ -87,8 +96,7 @@ Tarea.updateTarea = (body, result) => {
       body.fechaFin,
       body.responsable,
       body.colaborador,
-      body.status,
-      body.id,
+      body.status
     ],
     function (err, res) {
       if (err) {
@@ -102,7 +110,7 @@ Tarea.updateTarea = (body, result) => {
 };
 
 Tarea.deleteTarea = (id, result) => {
-  db.query("Delete from tarea" + " where idTarea = " + id, function (err, res) {
+  db.query("UPDATE TAREA SET IDSTATUS= 6 where idTarea = " + id, function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -113,3 +121,17 @@ Tarea.deleteTarea = (id, result) => {
 };
 
 module.exports = Tarea;
+
+// SELECT
+//     Tar.IdTarea,
+//     Tar.Titulo,
+//     Tar.Descripcion,
+//     Tar.FechaInicio,
+//     Tar.FechaFin,
+//     Tar.IdResponsable,
+//     Tar.IdColaborador,
+//     Tar.IdStatus
+// FROM tarea Tar
+// INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador
+// INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable
+// INNER JOIN STATUS Sta ON Sta.IdStatus = Tar.IdStatus

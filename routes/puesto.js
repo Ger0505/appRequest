@@ -37,9 +37,26 @@ router.post("/insert", function (req, res, next) {
   });
 });
 
-router.patch("/update", function (req, res, next) {});
+router.put('/update', function(req, res, next) {
+  puestoModel.updatePuesto(req.body,
+  function(err,result){
+      if(err)
+          res.json(
+              {"response":"Error",
+                  "msg":err
+              }
+          );
+      console.log("res",result);
+      res.json(
+          {
+              "response":result,
+              "msg":"200"
+          }
+      );
+  });
+});
 
-router.delete("/delete/:id", function (req, res, next) {
+router.put("/delete/:id", function (req, res, next) {
   puestoModel.deletePuesto(req.params.id, function (err, result) {
     if (err) res.json({ response: "Error", msg: err });
     console.log("res", result);

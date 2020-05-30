@@ -15,6 +15,7 @@ var Colaborador = function (Colaborador) {
 Colaborador.listColaborador = function (result) {
   db.query(
     "SELECT " +
+      "IdColaborador," +
       "Nombre," +
       "Apellido1," +
       "Apellido2," +
@@ -22,12 +23,12 @@ Colaborador.listColaborador = function (result) {
       "Usuario," +
       "Password," +
       "P.Descripcion AS Puesto," +
-      "D.Descripcion AS Departamento" +
+      "D.Descripcion AS Departamento " +
       "FROM " +
       "colaborador C " +
       "INNER JOIN puesto P ON P.IdPuesto = C.IdPuesto " +
       "INNER JOIN departamento D ON D.IdDepartamento = C.IdDepartamento " +
-      "WHERE STATUS = 1",
+      "WHERE C.STATUS = 1",
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -47,6 +48,7 @@ Colaborador.getColaborador = function (id, result) {
       "Apellido2," +
       "FechaAlta," +
       "Usuario," +
+      "Password," +
       "P.Descripcion AS Puesto," +
       "D.Descripcion AS Departamento" +
       " FROM " +
@@ -72,12 +74,12 @@ Colaborador.insertColaborador = function (body, result) {
       "VALUES(?,?,?,?,?,?,?)",
     [
       body.nombre,
-      body.ape1,
-      body.ape2,
-      body.usu,
-      body.pass,
+      body.apellido1,
+      body.apellido2,
+      body.usuario,
+      body.password,
       body.puesto,
-      body.dep,
+      body.departamento,
     ],
     function (err, res) {
       if (err) {
@@ -100,16 +102,15 @@ Colaborador.updateColaborador = function (body, result) {
       "PASSWORD = ?," +
       "IDPUESTO = ?," +
       "IDDEPARTAMENTO = ?" +
-      "WHERE IDCOLABORADOR = ?",
+      "WHERE IDCOLABORADOR ="+body.id,
     [
       body.nombre,
-      body.ape1,
-      body.ape2,
-      body.usu,
-      body.pass,
+      body.apellido1,
+      body.apellido2,
+      body.usuario,
+      body.password,
       body.puesto,
-      body.dep,
-      body.id,
+      body.departamento
     ],
     function (err, res) {
       if (err) {
@@ -124,7 +125,7 @@ Colaborador.updateColaborador = function (body, result) {
 
 Colaborador.deleteColaborador = function (id, result) {
   db.query(
-    "DELETE from colaborador SET STATUS= 0 WHERE IDCOLABORADOR = " + id,
+    "UPDATE colaborador SET STATUS= 0 WHERE IDCOLABORADOR = " + id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);

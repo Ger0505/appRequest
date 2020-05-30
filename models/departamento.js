@@ -1,17 +1,17 @@
 const db = require("./db_conexion.js");
 
-var Puesto = function (Puesto) {
-  this.id = Puesto.id;
-  this.descripcion = Puesto.descripcion; 
+var Departamento = function (Departamento) {
+  this.id = Departamento.id;
+  this.descripcion = Departamento.descripcion; 
 };
 
-Puesto.listPuesto = function (result) {
+Departamento.listDepartamento = function (result) {
   db.query(
       "SELECT " +
-      "IdPuesto," +
+      "IdDepartamento," +
       "Descripcion " +
       "FROM " +
-      "Puesto " +
+      "Departamento " +
       "WHERE Status = 1",
     function (err, res) {
       if (err) {
@@ -24,14 +24,14 @@ Puesto.listPuesto = function (result) {
   );
 };
 
-Puesto.getPuesto = function (id, result) {
+Departamento.getDepartamento = function (id, result) {
   db.query(
     "SELECT " +
-    "IdPuesto," +
+    "IdDepartamento," +
     "Descripcion " +
     "FROM " +
-    "Puesto " +
-    "WHERE Status = 1 AND IDPuesto ="+id,
+    "Departamento " +
+    "WHERE Status = 1 AND IDDepartamento ="+id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -43,9 +43,9 @@ Puesto.getPuesto = function (id, result) {
   );
 };
 
-Puesto.insertPuesto = function (body, result) {
+Departamento.insertDepartamento = function (body, result) {
     db.query(
-    "INSERT INTO Puesto(Descripcion) " +
+    "INSERT INTO Departamento(Descripcion) " +
       "VALUES(?)",
     [
       body.descripcion
@@ -61,11 +61,11 @@ Puesto.insertPuesto = function (body, result) {
   );
 };
 
-Puesto.updatePuesto = function (body, result) {
+Departamento.updateDepartamento = function (body, result) {
   db.query(
-    "UPDATE Puesto SET " +
+    "UPDATE Departamento SET " +
       "DESCRIPCION = ? " +
-      "WHERE IDPuesto = "+body.id,
+      "WHERE IDDepartamento = "+body.id,
     [
       body.descripcion
     ],
@@ -80,9 +80,9 @@ Puesto.updatePuesto = function (body, result) {
   );
 };
 
-Puesto.deletePuesto = function (id, result) {
+Departamento.deleteDepartamento = function (id, result) {
   db.query(
-    "UPDATE Puesto SET Status = 0 WHERE IDPuesto = " + id,
+    "UPDATE Departamento SET Status = 0 WHERE IDDepartamento = " + id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -94,4 +94,4 @@ Puesto.deletePuesto = function (id, result) {
   );
 };
 
-module.exports = Puesto;
+module.exports = Departamento;
