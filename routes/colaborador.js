@@ -61,7 +61,7 @@ router.put("/delete/:id", function (req, res, next) {
 });
 
 router.post("/loggin", function (req, res, next) {
-  colModel.loggin(req.params.id, function (err, result) {
+  colModel.loggin(req.body, function (err, result) {
     if (err) res.json({ response: "Error", msg: err });
     console.log("res", result);
     res.json({
