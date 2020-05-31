@@ -79,7 +79,7 @@ Colaborador.insertColaborador = function (body, result) {
       body.usuario,
       body.password,
       body.puesto,
-      body.departamento,
+      body.departamento
     ],
     function (err, res) {
       if (err) {
@@ -102,7 +102,8 @@ Colaborador.updateColaborador = function (body, result) {
       "PASSWORD = ?," +
       "IDPUESTO = ?," +
       "IDDEPARTAMENTO = ?" +
-      "WHERE IDCOLABORADOR ="+body.id,
+      "WHERE IDCOLABORADOR =" +
+      body.id,
     [
       body.nombre,
       body.apellido1,
@@ -126,6 +127,46 @@ Colaborador.updateColaborador = function (body, result) {
 Colaborador.deleteColaborador = function (id, result) {
   db.query(
     "UPDATE colaborador SET STATUS= 0 WHERE IDCOLABORADOR = " + id,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
+Colaborador.loggin = (body, result) => {
+  db.query(
+    "SELECT IF(c.`Usuario`=? and c.`Password`=?, true, false) as login," +
+      "IF(c.`Usuario`=? and c.`Password`=?, c.`idColaborador`, 'none') as IdColaborador," +
+      "IF(c.`Usuario`=? and c.`Password`=?, c.`Nombre`, 'none') as Nombre," +
+      "IF(c.`Usuario`=? and c.`Password`=?, c.`Apellido1`,'none') as Apellido1," +
+      "IF(c.`Usuario`=? and c.`Password`=?, c.`Apellido2`, 'none') as Apellido2," +
+      "IF(c.`Usuario`=? and c.`Password`=?,d.`Descripcion`, 'none') as Departamento," +
+      "IF(c.`Usuario`=? and c.`Password`=?, p.`Descripcion`, 'none') as Puesto " +
+      "from COLABORADOR c " +
+      "INNER JOIN PUESTO p ON p.IdPuesto = c.IdPuesto " +
+      "INNER JOIN DEPARTAMENTO d ON d.IdDepartamento = c.IdDepartamento " +
+      "GROUP BY login",
+    [
+      body.usuario,
+      body.password,
+      body.usuario,
+      body.password,
+      body.usuario,
+      body.password,
+      body.usuario,
+      body.password,
+      body.usuario,
+      body.password,
+      body.usuario,
+      body.password,
+      body.usuario,
+      body.password
+    ],
     function (err, res) {
       if (err) {
         console.log("error: ", err);

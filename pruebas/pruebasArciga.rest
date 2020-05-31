@@ -1,0 +1,8 @@
+POST http://localhost:3000/colaborador/loggin HTTP/1.1
+Content-Type: application/json
+
+{
+    "usuario": "Kribrick2",
+    "password": "pato98"
+}
+
