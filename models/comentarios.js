@@ -45,8 +45,8 @@ Comentarios.insertComentarios = (body, result) => {
   db.query(
     "Insert into comentarios " +
       "(Comentario, Fecha, idTarea, idColaborador) " +
-      "values (?,?,?,?)",
-    [body.comentario, body.fecha, body.tarea, body.colaborador],
+      "values (?,?,(SELECT MAX(IDTAREA) FROM TAREA),?)",
+    [body.comentario, body.fecha, body.colaborador],
     function (err, res) {
       if (err) {
         console.log("error: ", err);
