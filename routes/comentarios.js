@@ -6,8 +6,8 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Comentarios" });
 });
 
-router.get("/list", function (req, res, next) {
-  comentariosModel.listComentarios(function (err, result) {
+router.get("/list/:id", function (req, res, next) {
+  comentariosModel.listComentarios(req.params.id,function (err, result) {
     console.log("/");
     if (err) res.json({ response: "Error", msg: err });
 
@@ -28,6 +28,17 @@ router.get("/get/:id", function (req, res, next) {
 
 router.post("/insert", function (req, res, next) {
   comentariosModel.insertComentarios(req.body, function (err, result) {
+    if (err) res.json({ response: "Error", msg: err });
+    console.log("res", result);
+    res.json({
+      response: result,
+      msg: "200",
+    });
+  });
+});
+
+router.post("/insertComentario", function (req, res, next) {
+  comentariosModel.insertComentario(req.body, function (err, result) {
     if (err) res.json({ response: "Error", msg: err });
     console.log("res", result);
     res.json({

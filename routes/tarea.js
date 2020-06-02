@@ -6,8 +6,8 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Tarea" });
 });
 
-router.get("/list", function (req, res, next) {
-  tareaModel.listTarea(function (err, result) {
+router.get("/list/:id", function (req, res, next) {
+  tareaModel.listTarea(req.params.id,function (err, result) {
     console.log("/");
     if (err) res.json({ response: "Error", msg: err });
 
@@ -39,6 +39,25 @@ router.post("/insert", function (req, res, next) {
 
 router.put("/update",function(req, res, next) {
   tareaModel.updateTarea(req.body,
+  function(err,result){
+      if(err)
+          res.json(
+              {"response":"Error",
+                  "msg":err
+              }
+          );
+      console.log("res",result);
+      res.json(
+          {
+              "response":result,
+              "msg":"200"
+          }
+      );
+  });
+});
+
+router.put("/updateStatus",function(req, res, next) {
+  tareaModel.updateStatus(req.body,
   function(err,result){
       if(err)
           res.json(

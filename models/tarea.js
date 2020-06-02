@@ -10,7 +10,7 @@ var Tarea = (Tarea) => {
   this.status = Tarea.status;
 };
 
-Tarea.listTarea = (result) => {
+Tarea.listTarea = (id,result) => {
   db.query("SELECT "+
     "Tar.IdTarea,"+
     "Tar.Titulo,"+
@@ -21,7 +21,9 @@ Tarea.listTarea = (result) => {
     "FROM tarea Tar "+
     "INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador "+
     "INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable "+
-    "INNER JOIN STATUS Sta ON Sta.IdStatus = Tar.IdStatus",
+    "INNER JOIN STATUS Sta ON Sta.IdStatus = Tar.IdStatus "+
+    "WHERE Col1.IdColaborador= ? OR Col2.IdColaborador= ?",
+    [id,id],
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -35,15 +37,22 @@ Tarea.listTarea = (result) => {
 
 Tarea.getTarea = (id, result) => {
   db.query("SELECT "+
-    "Tar.IdTarea,"+
-    "Tar.Titulo,"+
-    "Tar.Descripcion,"+
-    "Tar.FechaInicio,"+
-    "Tar.FechaFin,"+
-    "Tar.IdResponsable,"+
-    "Tar.IdColaborador,"+
-    "Tar.IdStatus "+
-    "FROM tarea Tar WHERE Tar.IdTarea="+ id,
+  "Tar.IdTarea,"+
+  "Tar.TItulo,"+
+  "Tar.Descripcion,"+
+  "DATE_FORMAT(Tar.FechaInicio,'%Y-%m-%d') AS FechaInicio,"+
+  "DATE_FORMAT(Tar.FechaFin,'%Y-%m-%d') AS FechaFin,"+
+  "Tar.IdColaborador,"+
+  "CONCAT(Col1.Nombre,' ',Col1.Apellido1,' ',Col1.Apellido2) AS Colaborador,"+
+  "Tar.IdResponsable,"+
+  "CONCAT(Col2.Nombre,' ',Col2.Apellido1,' ',Col2.Apellido2) AS Colaborador,"+
+  "Tar.IdStatus,"+
+  "Sta.Nombre AS Status "+
+"FROM tarea Tar "+
+"INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador "+
+"INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable "+
+"INNER JOIN status Sta ON Sta.IdStatus = Tar.IdStatus "+
+"WHERE IdTarea ="+id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -96,6 +105,25 @@ Tarea.updateTarea = (body, result) => {
       body.fechaFin,
       body.responsable,
       body.colaborador,
+      body.status
+    ],
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
+Tarea.updateStatus = (body, result) => {
+  db.query(
+    "Update TAREA SET " +
+      "idStatus = ? " +
+      "WHERE idTarea ="+ body.id,
+    [
       body.status
     ],
     function (err, res) {
