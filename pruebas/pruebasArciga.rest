@@ -6,3 +6,5 @@ Content-Type: application/json
     "password": "pato98"
 }
 
+
+GET http://localhost:3000/departamento/getdesc/Administración HTTP/1.1

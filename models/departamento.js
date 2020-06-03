@@ -2,12 +2,12 @@ const db = require("./db_conexion.js");
 
 var Departamento = function (Departamento) {
   this.id = Departamento.id;
-  this.descripcion = Departamento.descripcion; 
+  this.descripcion = Departamento.descripcion;
 };
 
 Departamento.listDepartamento = function (result) {
   db.query(
-      "SELECT " +
+    "SELECT " +
       "IdDepartamento," +
       "Descripcion " +
       "FROM " +
@@ -27,11 +27,33 @@ Departamento.listDepartamento = function (result) {
 Departamento.getDepartamento = function (id, result) {
   db.query(
     "SELECT " +
-    "IdDepartamento," +
-    "Descripcion " +
-    "FROM " +
-    "Departamento " +
-    "WHERE Status = 1 AND IDDepartamento ="+id,
+      "IdDepartamento," +
+      "Descripcion " +
+      "FROM " +
+      "Departamento " +
+      "WHERE Status = 1 AND IDDepartamento =" +
+      id,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
+Departamento.getDepartamentoByDescripcion = function (descripcion, result) {
+  db.query(
+    "SELECT " +
+      "IdDepartamento," +
+      "Descripcion " +
+      "FROM " +
+      "Departamento " +
+      "WHERE Status = 1 AND Descripcion = '" +
+      descripcion +
+      "'",
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -44,12 +66,9 @@ Departamento.getDepartamento = function (id, result) {
 };
 
 Departamento.insertDepartamento = function (body, result) {
-    db.query(
-    "INSERT INTO Departamento(Descripcion) " +
-      "VALUES(?)",
-    [
-      body.descripcion
-    ],
+  db.query(
+    "INSERT INTO Departamento(Descripcion) " + "VALUES(?)",
+    [body.descripcion],
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -65,10 +84,9 @@ Departamento.updateDepartamento = function (body, result) {
   db.query(
     "UPDATE Departamento SET " +
       "DESCRIPCION = ? " +
-      "WHERE IDDepartamento = "+body.id,
-    [
-      body.descripcion
-    ],
+      "WHERE IDDepartamento = " +
+      body.id,
+    [body.descripcion],
     function (err, res) {
       if (err) {
         console.log("error: ", err);
