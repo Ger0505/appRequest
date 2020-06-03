@@ -148,6 +148,54 @@ Tarea.deleteTarea = (id, result) => {
   });
 };
 
+Tarea.listFile = (id,result) => {
+  db.query("SELECT "+
+    "IdArchivo,"+
+    "Ruta,"+
+    "IdTarea "+
+    "FROM archivo "+
+    "WHERE STATUS = 1 AND IdTarea ="+id,
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
+Tarea.insertFile = (body, result) => {
+  db.query(
+    "INSERT INTO ARCHIVO " +
+      "(Ruta,IdTarea) " +
+      "VALUES(?,?)",
+    [
+      body.ruta,
+      body.idTarea
+    ],
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
+    }
+  );
+};
+
+Tarea.deleteFile = (body, result) => {
+  db.query("UPDATE ARCHIVO SET STATUS= 0 where RUTA = ?",[body.name], function (err, res) {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+    } else {
+      result(null, res);
+    }
+  });
+};
 module.exports = Tarea;
 
 // SELECT
