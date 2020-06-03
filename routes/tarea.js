@@ -27,11 +27,13 @@ router.get("/get/:id", function (req, res, next) {
 });
 
 router.post("/insert", function (req, res, next) {
+  var IdTarea;
   tareaModel.insertTarea(req.body, function (err, result) {
     if (err) res.json({ response: "Error", msg: err });
     console.log("res", result);
     res.json({
       response: result,
+      id: result.insertId,
       msg: "200",
     });
   });
