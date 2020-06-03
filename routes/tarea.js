@@ -107,7 +107,7 @@ router.get("/listFile/:id", function (req, res, next) {
   });
 });
 
-router.delete("/deleteFile", function (req, res, next) {
+router.put("/deleteFile", function (req, res, next) {
   tareaModel.deleteFile(req.body, function (err, result) {
     if (err) res.json({ response: "Error", msg: err });
     console.log("res", result);

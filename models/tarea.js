@@ -22,7 +22,7 @@ Tarea.listTarea = (id,result) => {
     "INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador "+
     "INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable "+
     "INNER JOIN STATUS Sta ON Sta.IdStatus = Tar.IdStatus "+
-    "WHERE Col1.IdColaborador= ? OR Col2.IdColaborador= ?",
+    "WHERE (Col1.IdColaborador= ? OR Col2.IdColaborador= ?) AND Tar.IdStatus != 6",
     [id,id],
     function (err, res) {
       if (err) {
@@ -187,7 +187,7 @@ Tarea.insertFile = (body, result) => {
 };
 
 Tarea.deleteFile = (body, result) => {
-  db.query("UPDATE ARCHIVO SET STATUS= 0 where RUTA = ?",[body.name], function (err, res) {
+  db.query("UPDATE ARCHIVO SET STATUS= 0 where RUTA = '"+[body.name]+"'", function (err, res) {
     if (err) {
       console.log("error: ", err);
       result(err, null);
