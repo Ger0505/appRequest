@@ -10,20 +10,21 @@ var Tarea = (Tarea) => {
   this.status = Tarea.status;
 };
 
-Tarea.listTarea = (id,result) => {
-  db.query("SELECT "+
-    "Tar.IdTarea,"+
-    "Tar.Titulo,"+
-    "Sta.Nombre AS Status,"+
-    "Tar.Descripcion,"+
-    "CONCAT(Col1.Nombre, ' ' , Col1.Apellido1) AS Colaborador,"+
-	  "CONCAT(Col2.Nombre, ' ' , Col2.Apellido1) AS Responsable "+
-    "FROM tarea Tar "+
-    "INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador "+
-    "INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable "+
-    "INNER JOIN STATUS Sta ON Sta.IdStatus = Tar.IdStatus "+
-    "WHERE (Col1.IdColaborador= ? OR Col2.IdColaborador= ?) AND Tar.IdStatus != 6",
-    [id,id],
+Tarea.listTarea = (id, result) => {
+  db.query(
+    "SELECT " +
+      "Tar.IdTarea," +
+      "Tar.Titulo," +
+      "Sta.Descripcion AS Status," +
+      "Tar.Descripcion," +
+      "CONCAT(Col1.Nombre, ' ' , Col1.Apellido1) AS Colaborador," +
+      "CONCAT(Col2.Nombre, ' ' , Col2.Apellido1) AS Responsable " +
+      "FROM tarea Tar " +
+      "INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador " +
+      "INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable " +
+      "INNER JOIN STATUS Sta ON Sta.IdStatus = Tar.IdStatus " +
+      "WHERE (Col1.IdColaborador= ? OR Col2.IdColaborador= ?) AND Tar.IdStatus != 6",
+    [id, id],
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -36,23 +37,25 @@ Tarea.listTarea = (id,result) => {
 };
 
 Tarea.getTarea = (id, result) => {
-  db.query("SELECT "+
-  "Tar.IdTarea,"+
-  "Tar.TItulo,"+
-  "Tar.Descripcion,"+
-  "DATE_FORMAT(Tar.FechaInicio,'%Y-%m-%d') AS FechaInicio,"+
-  "DATE_FORMAT(Tar.FechaFin,'%Y-%m-%d') AS FechaFin,"+
-  "Tar.IdColaborador,"+
-  "CONCAT(Col1.Nombre,' ',Col1.Apellido1,' ',Col1.Apellido2) AS Colaborador,"+
-  "Tar.IdResponsable,"+
-  "CONCAT(Col2.Nombre,' ',Col2.Apellido1,' ',Col2.Apellido2) AS Colaborador,"+
-  "Tar.IdStatus,"+
-  "Sta.Nombre AS Status "+
-"FROM tarea Tar "+
-"INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador "+
-"INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable "+
-"INNER JOIN status Sta ON Sta.IdStatus = Tar.IdStatus "+
-"WHERE IdTarea ="+id,
+  db.query(
+    "SELECT " +
+      "Tar.IdTarea," +
+      "Tar.TItulo," +
+      "Tar.Descripcion," +
+      "DATE_FORMAT(Tar.FechaInicio,'%Y-%m-%d') AS FechaInicio," +
+      "DATE_FORMAT(Tar.FechaFin,'%Y-%m-%d') AS FechaFin," +
+      "Tar.IdColaborador," +
+      "CONCAT(Col1.Nombre,' ',Col1.Apellido1,' ',Col1.Apellido2) AS Colaborador," +
+      "Tar.IdResponsable," +
+      "CONCAT(Col2.Nombre,' ',Col2.Apellido1,' ',Col2.Apellido2) AS Colaborador," +
+      "Tar.IdStatus," +
+      "Sta.Nombre AS Status " +
+      "FROM tarea Tar " +
+      "INNER JOIN colaborador Col1 ON Col1.IdColaborador = Tar.IdColaborador " +
+      "INNER JOIN colaborador Col2 ON Col2.IdColaborador = Tar.IdResponsable " +
+      "INNER JOIN status Sta ON Sta.IdStatus = Tar.IdStatus " +
+      "WHERE IdTarea =" +
+      id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -97,7 +100,8 @@ Tarea.updateTarea = (body, result) => {
       "idResponsable = ?," +
       "idColaborador = ?," +
       "idStatus = ? " +
-      "WHERE idTarea ="+ body.id,
+      "WHERE idTarea =" +
+      body.id,
     [
       body.titulo,
       body.descripcion,
@@ -120,12 +124,8 @@ Tarea.updateTarea = (body, result) => {
 
 Tarea.updateStatus = (body, result) => {
   db.query(
-    "Update TAREA SET " +
-      "idStatus = ? " +
-      "WHERE idTarea ="+ body.id,
-    [
-      body.status
-    ],
+    "Update TAREA SET " + "idStatus = ? " + "WHERE idTarea =" + body.id,
+    [body.status],
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -138,7 +138,10 @@ Tarea.updateStatus = (body, result) => {
 };
 
 Tarea.deleteTarea = (id, result) => {
-  db.query("UPDATE TAREA SET IDSTATUS= 6 where idTarea = " + id, function (err, res) {
+  db.query("UPDATE TAREA SET IDSTATUS= 6 where idTarea = " + id, function (
+    err,
+    res
+  ) {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -148,13 +151,15 @@ Tarea.deleteTarea = (id, result) => {
   });
 };
 
-Tarea.listFile = (id,result) => {
-  db.query("SELECT "+
-    "IdArchivo,"+
-    "Ruta,"+
-    "IdTarea "+
-    "FROM archivo "+
-    "WHERE STATUS = 1 AND IdTarea ="+id,
+Tarea.listFile = (id, result) => {
+  db.query(
+    "SELECT " +
+      "IdArchivo," +
+      "Ruta," +
+      "IdTarea " +
+      "FROM archivo " +
+      "WHERE STATUS = 1 AND IdTarea =" +
+      id,
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -168,13 +173,8 @@ Tarea.listFile = (id,result) => {
 
 Tarea.insertFile = (body, result) => {
   db.query(
-    "INSERT INTO ARCHIVO " +
-      "(Ruta,IdTarea) " +
-      "VALUES(?,?)",
-    [
-      body.ruta,
-      body.idTarea
-    ],
+    "INSERT INTO ARCHIVO " + "(Ruta,IdTarea) " + "VALUES(?,?)",
+    [body.ruta, body.idTarea],
     function (err, res) {
       if (err) {
         console.log("error: ", err);
@@ -187,14 +187,17 @@ Tarea.insertFile = (body, result) => {
 };
 
 Tarea.deleteFile = (body, result) => {
-  db.query("UPDATE ARCHIVO SET STATUS= 0 where RUTA = '"+[body.name]+"'", function (err, res) {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-    } else {
-      result(null, res);
+  db.query(
+    "UPDATE ARCHIVO SET STATUS= 0 where RUTA = '" + [body.name] + "'",
+    function (err, res) {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
     }
-  });
+  );
 };
 module.exports = Tarea;
 
