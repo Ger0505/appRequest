@@ -28,6 +28,10 @@ ALTER TABLE `COMENTARIOS` DROP FOREIGN KEY `TAREA_COMENTARIOS`;
 ALTER TABLE `COMENTARIOS` DROP FOREIGN KEY `COLABORADOR_COMENTARIOS`;
 
 # ---------------------------------------------------------------------- #
+# Drop table "ARCHIVO"                                                     #
+# ---------------------------------------------------------------------- #
+
+# ---------------------------------------------------------------------- #
 # Drop table "COMENTARIOS"                                               #
 # ---------------------------------------------------------------------- #
 
