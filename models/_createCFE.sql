@@ -61,7 +61,7 @@ CREATE TABLE `colaborador` (
   `IdPuesto` int(11) NOT NULL,
   `IdDepartamento` int(11) NOT NULL,
   `Status` int(11) NOT NULL DEFAULT 1,
-  `FechaAlta` date NOT NULL DEFAULT NOW()
+  `FechaAlta` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `tarea` (
   `IdTarea` int(11) NOT NULL,
   `TItulo` varchar(40) NOT NULL,
   `Descripcion` varchar(60) DEFAULT NULL,
-  `FechaInicio` date NOT NULL DEFAULT NOW(),
+  `FechaInicio` date NOT NULL,
   `FechaFin` date NOT NULL,
   `IdResponsable` int(11) NOT NULL,
   `IdColaborador` int(11) DEFAULT NULL,
